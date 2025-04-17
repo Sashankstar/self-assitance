@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>self assitance</title>
+</head>
+<style>
+  /* *{
+        overflow-y: hidden;
+    } */
+  button {
+    background-color: transparent;
+    border: none;
+    margin-left: 565px;
+  }
+
+  .child {
+    background-image: url("https://raw.githubusercontent.com/pkprajapati7402/JARVIS-voice-assistant/refs/heads/main/giphy.gif");
+    width: 500px;
+    height: 550px;
+    background-repeat: no-repeat;
+    margin-left: 350px;
+    top: 0%;
+  }
+
+  body {
+    background-color: black;
+  }
+
+  p {
+    color: white;
+    text-align: center;
+  }
+</style>
+
+<body>
+  <div class="child">
+    <!-- <h1>Voice Input Example</h1> -->
+  </div>
+  <button id="startButton">
+    <img src="mic.png">
+  </button>
+  <p id="result">Your voice input will appear here...</p>
+  <script>
+    function speak(text) {
+      const text_speak = new SpeechSynthesisUtterance(text);
+      text_speak.rate = 1;
+      text_speak.volume = 1;
+      text_speak.pitch = 1;
+      window.speechSynthesis.speak(text_speak);
+    }
+    if ('webkitSpeechRecognition' in window) {
+      const recognition = new webkitSpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      recognition.onresult = function (event) {
+        let userTranscript = "";
+        let resultTranscript = "";
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          let transcript = event.results[i][0].transcript.toLowerCase();
+          if (event.results[i].isFinal) {
+            userTranscript += transcript + " ";
+            if (transcript.includes("hello")) {
+              speak("Hello sir, how may I help you?");
+            } else if (transcript.includes("whatsapp")) {
+              window.open("https://web.whatsapp.com/", "_blank");
+              speak("Opening WhatsApp");
+            } else if (transcript.includes("hi jarvis")) {
+              speak("tell me what can i do for you");
+            } else if (transcript.includes("what is your name")) {
+              speak("my name is jarvis");
+            } else if (transcript.includes("instagram")) {
+              window.open("https://www.instagram.com", "_blank");
+              speak("Opening Instagram");
+            } else if (transcript.includes("google")) {
+              let searchTerm = transcript.replace("google", "").trim();
+              window.open(`https://www.google.com/search?q=${searchTerm}`, "_blank");
+              speak("Opening Google");
+            } else if (transcript.includes("snapchat")) {
+              window.open("https://www.snapchat.com", "_blank");
+              speak("Opening Snapchat");
+            } else if (transcript.includes("facebook")) {
+              window.open("https://www.facebook.com", "_blank");
+              speak("Opening Facebook");
+            } else if (transcript.includes("wikipedia")) {
+              let searchTerm = transcript.replace("wikipedia", "").trim();
+              window.open(`https://en.wikipedia.org/wiki/${searchTerm}`, "_blank");
+              speak("Opening Wikipedia");
+            } else if (transcript.includes("netflix")) {
+              let searchTerm = transcript.replace("netflix", "").trim();
+              window.open("https://www.netflix.com/", "_blank");
+              speak("Opening Netflix");
+            } else if (transcript.includes("amazon prime")) {
+              window.open("https://www.primevideo.com/", "_blank");
+              speak("Opening Amazon Prime Video");
+            } else if (transcript.includes("amazon")) {
+              let searchTerm = transcript.replace("amazon", "").trim();
+              window.open(`https://www.amazon.in/s?k=${searchTerm}`, "_blank");
+              speak("Opening Amazon");
+            } else if (transcript.includes("flipkart")) {
+              let searchTerm = transcript.replace("flipkart", "").trim();
+              window.open(`https://www.flipkart.com/search?q=${searchTerm}`, "_blank");
+              speak("Opening Flipkart");
+            } else if (transcript.includes("meesho")) {
+              let searchTerm=transcript.includes("meesho","").trim();
+              window.open(`https://www.meesho.com/?srsltid=${searchTerm}`, "_blank");
+              speak("Opening Meesho");
+            }
+            else if (transcript.includes("youtube")) {
+              let searchTerm =transcript.replace("youtube","").trim();
+              window.open(`https://www.youtube.com/results?search_query=${searchTerm}`, "_blank");
+              speak("opening youtube")
+            }
+          } else {
+            resultTranscript += transcript + " ";
+          }
+        }
+        document.getElementById('result').innerText = userTranscript.trim() || resultTranscript.trim();
+      };
+      document.getElementById('startButton').addEventListener('click', function () {
+        recognition.start();
+      });
+    } else {
+      alert('Your browser does not support voice input');
+    }
+  </script>
+
+</body>
+
+</html>
