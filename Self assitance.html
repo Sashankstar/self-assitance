@@ -10,9 +10,6 @@
   <title>self assitance</title>
 </head>
 <style>
-  /* *{
-        overflow-y: hidden;
-    } */
   button {
     background-color: transparent;
     border: none;
@@ -54,15 +51,13 @@
       text_speak.pitch = 1;
       window.speechSynthesis.speak(text_speak);
     }
+    alert("please click on the mic button to start")
     if ('webkitSpeechRecognition' in window) {
       const recognition = new webkitSpeechRecognition();
-      recognition.continuous = true;
       recognition.interimResults = true;
-
       recognition.onresult = function (event) {
         let userTranscript = "";
         let resultTranscript = "";
-
         for (let i = event.resultIndex; i < event.results.length; i++) {
           let transcript = event.results[i][0].transcript.toLowerCase();
           if (event.results[i].isFinal) {
@@ -109,12 +104,12 @@
               window.open(`https://www.flipkart.com/search?q=${searchTerm}`, "_blank");
               speak("Opening Flipkart");
             } else if (transcript.includes("meesho")) {
-              let searchTerm=transcript.includes("meesho","").trim();
+              let searchTerm = transcript.includes("meesho", "").trim();
               window.open(`https://www.meesho.com/?srsltid=${searchTerm}`, "_blank");
-              speak("Opening Meesho");
+              speak("Opening meesho");
             }
             else if (transcript.includes("youtube")) {
-              let searchTerm =transcript.replace("youtube","").trim();
+              let searchTerm = transcript.replace("youtube", "").trim();
               window.open(`https://www.youtube.com/results?search_query=${searchTerm}`, "_blank");
               speak("opening youtube")
             }
@@ -130,8 +125,7 @@
     } else {
       alert('Your browser does not support voice input');
     }
-  </script>
-
+    </script>
 </body>
 
 </html>
